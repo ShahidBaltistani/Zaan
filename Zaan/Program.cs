@@ -4,6 +4,7 @@ using Zaan.Models.Model;
 using Zaan.Repositories;
 using Zaan.Repositories.Auth;
 using Zaan.Repositories.Customers;
+using Zaan.Repositories.Salers;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
@@ -17,6 +18,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IBase<Saler>, SalerRepository>();
+builder.Services.AddScoped<ISalerRepository, SalerRepository>();
 builder.Services.AddScoped<IBase<Customer>, CustomerRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddSwaggerGen();

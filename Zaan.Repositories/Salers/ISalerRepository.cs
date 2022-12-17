@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 using Zaan.Models;
 using Zaan.Models.Model;
 
-namespace Zaan.Repositories.Customers
+namespace Zaan.Repositories.Salers
 {
-    public interface ICustomerRepository : IBase<Customer>
+    public interface ISalerRepository : IBase<Saler>
     {
-        Task test();
     }
 }

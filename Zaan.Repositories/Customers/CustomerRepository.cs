@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,30 +17,47 @@ namespace Zaan.Repositories.Customers
          this.db=_db;
         }
 
-        public async Task Add(Customer model)
+        public async Task<Customer> Delete(Customer model)
         {
-            db.Customers.AddAsync(model);
-            db.SaveChangesAsync();
-        }
-
-        public async Task<bool> Delete(int Id)
-        {
-            throw new NotImplementedException();
+               var data = db.Customers.Remove(model);
+                await db.SaveChangesAsync();
+                return model;
         }
 
         public async Task<List<Customer>> GetAll()
         {
-            return db.Customers.Where(x=>x.IsActive).ToList();
+            return  db.Customers.Where(x=>x.IsActive).ToList();
         }
 
         public async Task<Customer> GetById(int Id)
         {
-            return db.Customers.Where(x=>x.Id == Id && x.IsActive).FirstOrDefault();
+            return  db.Customers.Where(x=>x.Id == Id && x.IsActive).FirstOrDefault();
         }
 
-        public async Task Update(Customer model)
+        public void Update(Customer model)
+        {
+            if (model != null)
+            {
+                var customer = GetById(model.Id);
+                db.Entry(customer).State =EntityState.Modified;
+                 db.SaveChanges();
+
+            }
+        }  
+        
+        public void Add(Customer model)
+        {
+            if (model != null)
+            {
+                db.Customers.Add(model);
+                 db.SaveChanges();
+            }
+        }
+
+        public Task test()
         {
             throw new NotImplementedException();
         }
+
     }
 }

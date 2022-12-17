@@ -1,33 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Zaan.Models.Model;
-using Zaan.Repositories.Customers;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Zaan.Repositories.Salers;
 
 namespace Zaan.Controllers
 {
-    [Route("customer")]
+    [Route("saler")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class SalerController : ControllerBase
     {
-        private readonly ISalerRepository customerService;
-        public CustomerController(ISalerRepository _customer)
+        private readonly ISalerRepository salerService;
+        public SalerController(ISalerRepository _customer)
         {
-            this.customerService = _customer;
+            this.salerService = _customer;
         }
         // GET: api/<CustomerController>
         [HttpGet]
         [Route("getall")]
         public async Task<IActionResult> Get()
         {
-            return Ok( await customerService.GetAll());
+            return Ok(await salerService.GetAll());
         }
 
         // GET api/<CustomerController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var data = await customerService.GetById(id);
+            var data = await salerService.GetById(id);
             if (data != null)
             {
                 return Ok();
@@ -37,11 +36,11 @@ namespace Zaan.Controllers
 
         // POST api/<CustomerController>
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Customer model)
+        public IActionResult Add([FromBody] Saler model)
         {
-            if(model != null)
+            if (model != null)
             {
-              customerService.Add(model);
+                salerService.Add(model);
                 return Ok();
             }
             return BadRequest(model);
@@ -49,13 +48,13 @@ namespace Zaan.Controllers
 
         // PUT api/<CustomerController>/5
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Customer model)
+        public IActionResult Update([FromBody] Saler model)
         {
-                if (model != null)
-                {
-                     customerService.Update(model);
-                    return Ok("Updated");
-                }
+            if (model != null)
+            {
+                salerService.Update(model);
+                return Ok("Updated");
+            }
             return BadRequest("Id is null");
         }
 
@@ -65,14 +64,15 @@ namespace Zaan.Controllers
         {
             if (id > 0)
             {
-                var cust = await customerService.GetById(id);
+                var cust = await salerService.GetById(id);
                 if (cust != null)
                 {
-                   await customerService.Delete(cust);
+                    await salerService.Delete(cust);
                     return Ok("Deleted");
                 }
             }
             return BadRequest("Id is null");
         }
     }
+}
 }

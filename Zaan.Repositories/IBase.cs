@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace Zaan.Repositories
 {
     public interface IBase<T> 
-    { 
-         Task  Add(T model);
-        Task Update(T model);
+    {
+        void Add(T model);
+        void Update(T model);
         Task<T> GetById(int Id);
-        Task<bool> Delete(int Id);
+        Task<T> Delete(T model);
         Task<List<T>> GetAll();
     }
 }
