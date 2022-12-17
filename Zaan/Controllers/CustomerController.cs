@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Zaan.Models.Model;
 using Zaan.Repositories.Customers;
+using Zaan.Repositories.Salers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,8 +11,8 @@ namespace Zaan.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly ISalerRepository customerService;
-        public CustomerController(ISalerRepository _customer)
+        private readonly ICustomerRepository customerService;
+        public CustomerController(ICustomerRepository _customer)
         {
             this.customerService = _customer;
         }
